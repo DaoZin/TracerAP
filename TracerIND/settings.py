@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'PHC',
     'village',
     'village_sec',
-    'frontend',
 
 ]
 
@@ -137,6 +136,3 @@ STATIC_URL = '/static/'
 
 CORS_ORIGIN_ALLOW_ALL = True # added to solve CORS
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'frontend', "client", "src" , "static"),  # update the STATICFILES_DIRS
-)
