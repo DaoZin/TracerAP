@@ -187,7 +187,6 @@ def GetPatient(request):
     pk = request.data.get("pkid")
     patient = Patient.objects.get(pkid = pk)
     serializer = PatientSerializer(data = patient)
-    serializer.is_valid()
     return Response(serializer.data,status = 200)
 
 #All Patients in a Village
