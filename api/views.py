@@ -187,11 +187,8 @@ def GetPatient(request):
     pk = request.data.get("pkid")
     patient = Patient.objects.get(pkid = pk)
     serializer = PatientSerializer(data = patient)
-    if serializer.is_valid():
-        return Response(serializer.data,status = 200)
-    else:
-        return Response(serializer.errors,status=400)
-    
+    serializer.is_valid()
+    return Response(serializer.data,status = 200)
 
 #All Patients in a Village
 @api_view(['POST'])
