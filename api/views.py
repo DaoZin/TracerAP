@@ -190,7 +190,7 @@ def GetPatient(request):
     if serializer.is_valid():
         return Response(serializer.data,status = 200)
     else:
-        return Response(serializer.error,status=400)
+        return Response(serializer.errors,status=400)
     
 
 #All Patients in a Village
