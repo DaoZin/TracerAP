@@ -66,3 +66,4 @@ class Patient (models.Model):
     deathDate = models.CharField(blank = True, max_length=10)
     placeOfDeath = models.CharField(max_length=50,blank=True)
     causeOfDeath = models.TextField(max_length=300,blank=True)
+    type_data = models.CharField(max_length=50,default = "Development")

@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
+from . import local_settings
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -23,10 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'f-7=$cp7#_8@8s5-pjpxe!)vh=%qowo=ctqay9@za*gk1gc!i='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# DEBUG = False
 
 
-ALLOWED_HOSTS = ['149.129.138.15','api-tracerind.covidindiataskforce.org']
+# ALLOWED_HOSTS = ['149.129.138.15','api-tracerind.covidindiataskforce.org']
 
 
 
@@ -47,10 +47,13 @@ INSTALLED_APPS = [
     'PHC',
     'village',
     'village_sec',
+    'corsheaders',
 
 ]
 
+
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -59,6 +62,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
+CORS_ORIGIN_ALLOW_ALL = True # added to solve CORS
+
 
 ROOT_URLCONF = 'TracerIND.urls'
 
@@ -134,5 +141,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-CORS_ORIGIN_ALLOW_ALL = True # added to solve CORS
 
