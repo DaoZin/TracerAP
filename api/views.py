@@ -160,7 +160,7 @@ def GetVillageData(request):
     village = (
         Village.objects.filter(village_sec = (Village_sec.objects.get(name__iexact = request.data.get("village_sec")).villagesec_id))
     )
-    serializer = VillageSerializer(village, many=True)
+    serializer = VillageSerializer(data = village, many=True)
     serializer.is_valid()
     return Response(serializer.data,status = 200)
 
