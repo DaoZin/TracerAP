@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-from . import local_settings
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -23,10 +22,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'f-7=$cp7#_8@8s5-pjpxe!)vh=%qowo=ctqay9@za*gk1gc!i='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = False
+DEBUG = True
 
 
-# ALLOWED_HOSTS = ['149.129.138.15','api-tracerind.covidindiataskforce.org']
+ALLOWED_HOSTS = ['149.129.138.15','api-tracerind.covidindiataskforce.org',"*"]
 
 
 
@@ -140,5 +139,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
+CORS_ORIGIN_ALLOW_ALL = True 
+CORS_ALLOW_CREDENTIALS = True
 
