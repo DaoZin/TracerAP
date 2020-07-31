@@ -48,7 +48,7 @@ class Patient (models.Model):
     doctorreq = models.BooleanField(default = False)
     # if above is yes then ask refer to the following hospital
     hospitalAdmit = models.CharField(max_length=50,blank = True)
-
+    opd = models.BooleanField(default=False)
     dateOfAdmit = models.CharField(blank = True, max_length=10) #YYYY-MM-DD
     refered = models.BooleanField(default = False)
     # case:yes

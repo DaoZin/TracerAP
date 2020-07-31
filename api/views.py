@@ -199,4 +199,3 @@ def GetPatientData_Village(request):
     serializer.is_valid()
     return Response(serializer.data,status = 200)
 
-
