@@ -22,7 +22,9 @@ urlpatterns = [
     path('GetVillageSecData/',views.GetVillageSecData,name = "GetVillageSecData"),
     path('GetVillageData/',views.GetVillageData,name = "GetVillageData"),
     path('GetPatientData_Village/',views.GetPatientData_Village,name = "GetPatientData_Village"),
+    
     #AUTH URLS
+    path('login-browse/', include('rest_framework.urls')), #ULTRA EXCLUSIVE DEV API
     path('token_jwt_get/', obtain_jwt_token, name='api_token_jwt'),
     path('token_jwt_refresh/', refresh_jwt_token, name='api_token_jwt'),
     path('token_jwt_verify/', verify_jwt_token, name='api_token_jwt'),

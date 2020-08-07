@@ -38,7 +38,6 @@ def parseVillage(request):
             "name" : item.get("Village"),
             "village_sec" : (Village_sec.objects.get(name__iexact = (item.get("Village_Sec"))).villagesec_id)
         }
-        print(vs)
         serializer = VillageSerializer(data = vs)
         if serializer.is_valid():
             serializer.save()
@@ -56,7 +55,6 @@ def parseVillageSec(request):
             "name" : item.get("Village_Sec"),
             "PHC" : (PHC.objects.get(name__iexact = (item.get("PHC"))).PHC_id)
         }
-        print(vs)
         serializer = VillageSecSerializer(data = vs)
         if serializer.is_valid():
             serializer.save()
@@ -165,7 +163,7 @@ def GetVillageData(request):
     return Response(serializer.data,status = 200)
 
 
-#List of all Villages, Android Exclusive API
+#List of all Villages
 @api_view(['GET'])
 def GetAllVillage(request):
     villagelist = list(Village.objects.all())
@@ -176,7 +174,6 @@ def GetAllVillage(request):
 @api_view(['GET'])
 def GetAllPatient(request):
     patientlist = Patient.objects.all()
-    print(patientlist)
     serializer = PatientSerializer(data = patientlist,many = True)
     serializer.is_valid()
     return Response(serializer.data,status = 200)
@@ -194,7 +191,6 @@ def GetPatient(request):
 def GetPatientData_Village(request):
     village = request.data.get("village")
     patientlist = list(Patient.objects.filter(village = (Village.objects.get(name__iexact = request.data.get("village")).village_id)))
-    print(patientlist)
     serializer = PatientSerializer(data = patientlist,many = True)
     serializer.is_valid()
     return Response(serializer.data,status = 200)
