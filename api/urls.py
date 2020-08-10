@@ -32,4 +32,8 @@ urlpatterns = [
     #ANDROID API
     # path('DroidDump/',views.DroidDump,name = "DroidDump"),
 
+    #Metrics URLS
+    path('GetPVGT/', views.GetPVGT, name='GetPVGT'),
+    path('GetPE/', views.GetPE, name='GetPE'),
+    path('GetStats/', views.GetStats, name='GetStats'),
 ]

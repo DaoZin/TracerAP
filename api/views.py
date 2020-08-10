@@ -280,3 +280,85 @@ def GetPatientData_Village(request):
     except Exception as e:
         return Response(e)
 
+
+
+#Matrix Analysis
+@api_view(['GET'])
+def GetPVGT(request):
+    try:
+        PVGT_count = Patient.objects.filter(PVGT__iexact = "YES").count()
+        total_count = Patient.objects.all().count()
+        res = {
+            "total":total_count,
+            "PVGT":PVGT_count
+        }
+        return Response(res,status = 200)
+    except Exception as e:
+        return Response(e)
+
+@api_view(['GET'])
+def GetPE(request):
+    try:
+        PE = Patient.objects.filter(pedalEdema__iexact = "Y")
+        PE_count =PE.count()
+        bilat = PE.filter(pedaltype__iexact = "bilateral").count()
+        single = PE_count - bilat
+        total_count = Patient.objects.all().count()
+        res = {
+            "total":total_count,
+            "PE":PE_count,
+            "Bilateral":bilat,
+            "Single":single
+        }
+        return Response(res,status = 200)
+    except Exception as e:
+        return Response(e)
+
+@api_view(['GET'])
+def GetStats(request):
+    try:
+        Patientlist = Patient.objects.all()
+        print(Patientlist)
+        SC = {
+            "Normal":(Patientlist.filter(serumCreatinine__lte= 2.0).count()),
+            "MI":Patientlist.filter(serumCreatinine__range=(2.0 , 5.9)).count(),
+            "Severe":Patientlist.filter(serumCreatinine__gt= 5.9).count(),
+        }
+        print(SC)
+        BU = {
+            "Normal":Patientlist.filter(bloodUrea__range=(15,40)).count(),
+            "Severe":Patientlist.filter(bloodUrea__gt= 40.0).count(),
+        }
+        print(BU)
+        ElecSod = {
+            "Normal":Patientlist.filter(electrolytes_sodium__range=(135,155)).count(),
+            "Severe":Patientlist.filter(electrolytes_sodium__gt= 155.0).count(),
+        }
+        print(ElecSod)
+        ElecPotas = {
+            "Normal":Patientlist.filter(electrolytes_potassium__range=(3.5 , 5.5)).count(),
+            "Severe":Patientlist.filter(electrolytes_potassium__gt= 5.5).count(),
+        }
+        print(ElecPotas)
+        BUN = {
+            "Normal":Patientlist.filter(bun__range=(8,23)).count(),
+            "Severe":Patientlist.filter(bun__gt= 23.0).count(),
+        }
+        print(BUN)
+        UA = {
+            "Normal":Patientlist.filter(uricAcid__range=(2.6,6.0)).count(),
+            "Severe":Patientlist.filter(uricAcid__gt= 6.0).count(),
+        }
+        print(UA)
+        res = {
+            "SerumCreatinine":SC,
+            "BloodUrea":BU,
+            "UricAcid":UA,
+            "Electrolytes_Sodium":ElecSod,
+            "Electrolytes_Potassium":ElecPotas,
+        }
+        print(res)
+        return Response(res,status = 200)
+    except Exception as e:
+        return Response(e)
+        
