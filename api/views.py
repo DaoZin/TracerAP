@@ -125,6 +125,7 @@ def AddPatient(request):
     except Exception as e:
         return Response(e)
 
+@csrf_exempt
 @api_view(["POST"])
 def AddPatients(request):
     try:
