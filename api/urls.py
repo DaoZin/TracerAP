@@ -14,6 +14,7 @@ urlpatterns = [
     # path('addmandal/',views.addmandal,name = "addmandal"),
     # path('addphc/',views.addphc,name = "addphc"),
     path('AddPatient/',views.AddPatient,name = "AddPatient"),
+    path('AddPatients/',views.AddPatients,name = "AddPatients"),
     path('DeletePatient/',views.DeletePatient,name = "DeletePatient"),
     path('UpdatePatient/',views.UpdatePatient,name = "UpdatePatient"),
     path('GetPatient/',views.GetPatient,name = "GetPatient"),

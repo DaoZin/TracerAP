@@ -20,6 +20,7 @@ from rest_framework.decorators import api_view
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseServerError
+from django.utils.crypto import get_random_string
 
 # LIST APIs
 @api_view(["GET"])
@@ -121,6 +122,29 @@ def AddPatient(request):
             return Response(serializer.data, status=200)
         else:
             return Response(serializer.errors, status=400)
+    except Exception as e:
+        return Response(e)
+
+@api_view(["POST"])
+def AddPatients(request):
+    try:
+        for p in request.data:
+            pk = get_random_string(length = 16)
+            p.update({"pkid":pk})
+            try:
+                p_village = (Village.objects.get(name__iexact = p['village'])).village_id
+            except Exception as e:
+                pass
+            print(p_village)
+            p.update(village = p_village)
+            serializer = PatientSerializer(data=p)
+            if serializer.is_valid():
+                serializer.save()
+            else:
+                print(p)
+                pass
+                return Response(serializer.errors, status = 400)
+        return Response(status=200)        
     except Exception as e:
         return Response(e)
 
