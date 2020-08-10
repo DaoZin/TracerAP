@@ -21,6 +21,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseServerError
 from django.utils.crypto import get_random_string
+from django.views.decorators.csrf import csrf_exempt
 
 # LIST APIs
 @api_view(["GET"])
