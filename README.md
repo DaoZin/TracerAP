@@ -39,5 +39,5 @@ $ python3 manage.py migrate
 $ python3 manage.py runserver
 
 Localhost:8000/api => API local endpoint
-
+Webhooks attatched, watch your back >.<
 ```
