@@ -185,9 +185,7 @@ def UpdatePatient(request):
 def GetPHCData(request):
     try:
         phc = PHC.objects.filter(
-            mandal=(
-                Mandal.objects.get(name__iexact=request.data.get("mandal")).mandal_id
-            )
+            mandal=(request.data.get("mandal_id"))
         )
         serializer = PHCSerializer(phc, many=True)
         return Response(serializer.data, status=200)
@@ -200,7 +198,7 @@ def GetPHCData(request):
 def GetVillageSecData(request):
     try:
         villagesec = Village_sec.objects.filter(
-            PHC=(PHC.objects.get(name__iexact=request.data.get("PHC")).PHC_id)
+            PHC=(request.data.get("PHC_id"))
         )
         serializer = VillageSecSerializer(villagesec, many=True)
         return Response(serializer.data, status=200)
@@ -213,11 +211,7 @@ def GetVillageSecData(request):
 def GetVillageData(request):
     try:
         village = Village.objects.filter(
-            village_sec=(
-                Village_sec.objects.get(
-                    name__iexact=request.data.get("village_sec")
-                ).villagesec_id
-            )
+            village_sec=(request.data.get("villagesec_id"))
         )
         serializer = VillageSerializer(data=village, many=True)
         serializer.is_valid()

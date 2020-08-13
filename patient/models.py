@@ -3,49 +3,86 @@ from django.db import models
 from django.contrib.postgres.fields import JSONField
 from django.contrib.auth.models import User
 from village.models import Village
+from mandal.models import Mandal
+from PHC.models import PHC
+from village_sec.models import Village_sec 
 
 
 class Patient (models.Model):
     pkid = models.CharField(max_length=32,
                             primary_key=True
                             )
-
+# BASIC DETAILS
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
-    # SonOf/DaughterOf/WifeOf
-    relation = models.CharField(max_length=30)
-    gaurdian_name = models.CharField(max_length=50)
-    age = models.SmallIntegerField(default=0)
-    # M=> Male/F=>Female/NB=>NonBinary
-    gender = models.CharField(default='NaN', max_length=3)
     phone = models.CharField(max_length = 10)
     adhaar = models.CharField(max_length=16,blank=True)  # 16 digit num
-    village = models.ForeignKey(Village, on_delete=models.CASCADE)
+    relation = models.CharField(max_length=30) # SonOf/DaughterOf/WifeOf
+    gaurdian_name = models.CharField(max_length=50)
+    age = models.SmallIntegerField(default=0)
+    gender = models.CharField(default='NaN', max_length=3) # M=> Male/F=>Female/NB=>NonBinary
+    weight = models.DecimalField(default = 0.0,decimal_places = 2,max_digits = 4,blank=True)
+    height = models.DecimalField(default = 0.0,decimal_places = 2,max_digits=4,blank = True)
+    bloodgroup = models.CharField(default=None, max_length=4)
+    PVTG = models.CharField(default=None, max_length=3)
+    #Foreign Keys
+    mandal = models.ForeignKey(Mandal,on_delete=models.CASCADE,default = None)
+    phc = models.ForeignKey(PHC,on_delete=models.CASCADE,default = None)
+    villagesec = models.ForeignKey(Village_sec,on_delete=models.CASCADE,default = None)
+    village = models.ForeignKey(Village, on_delete=models.CASCADE,default = None)
     # single/married/separated/divorced/widowed
     maritalstatus = models.CharField(default=None, max_length=15)
 
-    bloodgroup = models.CharField(default=None, max_length=4)
-    PVGT = models.CharField(default=None, max_length=3)
+    #Basic Vitals
+    BasicVitals = JSONField(null = True)
+
+    #FORMAT =
+    #{
+        # Fever : "xC" for Celcius and "xF",
+        # BP : "x",
+        # HR : "x",
+        # Pulse: "x",
+        # RespRate : "x",
+    # }
+    
+    BasicSymptoms = JSONField(null = True)
+
+    #FORMAT =
+    #{
+        # Temperature : True or False,
+        # Aches :  True or False,
+        # Fatigue :  True or False,
+        # Cold:  True or False,
+        # Cough :  True or False,
+        # Diarrhoea :  True or False,
+        # Bleeding :  True or False,
+        # Infection : True or False,
+        # others : "Text"
+    # }
+    
+    report = JSONField(null = True)
+    #Free For ALl
+    patient_status = models.CharField(default="Closed", max_length=50)
+    pedalEdema = models.CharField(max_length=2,blank = True)
+    # if above is yes then ask single/bilateral
+    pedaltype = models.CharField(max_length=50,blank = True)
     deworming = models.BooleanField(default=False)
     dateoftesting = models.CharField(blank = True, max_length=10)
     serumCreatinine = models.DecimalField(max_digits=5, decimal_places=1,blank = True)
     bloodUrea = models.DecimalField(max_digits=5, decimal_places=1,blank = True)
+    hb = models.DecimalField(max_digits=4, decimal_places=1,blank=True,default = 0.0)
     uricAcid = models.DecimalField(max_digits=5, decimal_places=1,blank=True)
     electrolytes_sodium = models.DecimalField(max_digits=5, decimal_places=1,blank=True)
     electrolytes_potassium = models.DecimalField(
         max_digits=5, decimal_places=1,blank = True)
     bun = models.DecimalField(max_digits=5, decimal_places=1,blank=True)
-
-    pedalEdema = models.CharField(max_length=2,blank = True)
-    # if above is yes then ask single/bilateral
-    pedaltype = models.CharField(max_length=50,blank = True)
-
-    # good/abnormal
-    kidneystatus = models.CharField(max_length=50,blank = True)
+    
+    kidneystatus = models.CharField(max_length=50,blank = True) # good/abnormal
     # in case abnormal ask following
     ailments = models.TextField(max_length=100,blank=True)
     dialysis = models.BooleanField(default = False)
     doctorreq = models.BooleanField(default = False)
+    
     # if above is yes then ask refer to the following hospital
     hospitalAdmit = models.CharField(max_length=50,blank = True)
     opd = models.BooleanField(default=False)
@@ -66,4 +103,4 @@ class Patient (models.Model):
     deathDate = models.CharField(blank = True, max_length=10)
     placeOfDeath = models.CharField(max_length=50,blank=True)
     causeOfDeath = models.TextField(max_length=300,blank=True)
-    type_data = models.CharField(max_length=50,default = "Development")
+    type_data = models.CharField(max_length=50,default = "Production")
