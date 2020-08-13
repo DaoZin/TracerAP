@@ -116,6 +116,7 @@ def updatephc(request):
 
 @api_view(["POST"])
 def AddPatient(request):
+    print(request.data)
     try:
         serializer = PatientSerializer(data=request.data)
         if serializer.is_valid():
@@ -183,6 +184,7 @@ def UpdatePatient(request):
 # PHC for Mandal
 @api_view(["POST"])
 def GetPHCData(request):
+    print(request.data)
     try:
         phc = PHC.objects.filter(
             mandal=(request.data.get("mandal_id"))

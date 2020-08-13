@@ -34,7 +34,7 @@ class Patient (models.Model):
     maritalstatus = models.CharField(default=None, max_length=15)
 
     #Basic Vitals
-    BasicVitals = JSONField(null = True)
+    # BasicVitals = JSONField(null = True)
 
     #FORMAT =
     #{
@@ -45,7 +45,7 @@ class Patient (models.Model):
         # RespRate : "x",
     # }
     
-    BasicSymptoms = JSONField(null = True)
+    # BasicSymptoms = JSONField(null = True)
 
     #FORMAT =
     #{
@@ -60,17 +60,19 @@ class Patient (models.Model):
         # others : "Text"
     # }
     
-    report = JSONField(null = True)
+    # report = JSONField(null = True)
     #Free For ALl
-    patient_status = models.CharField(default="Closed", max_length=50)
+    deworming = models.BooleanField(default=False)
+    patient_status = models.CharField(default="Closed", max_length=50) #Critical/Moderate/Mild
+
+
+    #Pedal Fields
     pedalEdema = models.CharField(max_length=2,blank = True)
     # if above is yes then ask single/bilateral
     pedaltype = models.CharField(max_length=50,blank = True)
-    deworming = models.BooleanField(default=False)
     dateoftesting = models.CharField(blank = True, max_length=10)
     serumCreatinine = models.DecimalField(max_digits=5, decimal_places=1,blank = True)
     bloodUrea = models.DecimalField(max_digits=5, decimal_places=1,blank = True)
-    hb = models.DecimalField(max_digits=4, decimal_places=1,blank=True,default = 0.0)
     uricAcid = models.DecimalField(max_digits=5, decimal_places=1,blank=True)
     electrolytes_sodium = models.DecimalField(max_digits=5, decimal_places=1,blank=True)
     electrolytes_potassium = models.DecimalField(
@@ -82,7 +84,6 @@ class Patient (models.Model):
     ailments = models.TextField(max_length=100,blank=True)
     dialysis = models.BooleanField(default = False)
     doctorreq = models.BooleanField(default = False)
-    
     # if above is yes then ask refer to the following hospital
     hospitalAdmit = models.CharField(max_length=50,blank = True)
     opd = models.BooleanField(default=False)
@@ -90,17 +91,19 @@ class Patient (models.Model):
     refered = models.BooleanField(default = False)
     # case:yes
     referredto = models.CharField(max_length=50,blank = True)
-    status = models.TextField(max_length=300,blank=True)
+    ref_status = models.TextField(max_length=300,blank=True)
     treatmentDone = models.TextField(max_length=300,blank=True)
     discharge = models.CharField(blank = True, max_length=10)
     dischargeStatus = models.TextField(max_length=500,blank=True)
-    # case:no
-    # treatmentDone
-    # discharge
-    # dischargeStatus
     deceased = models.BooleanField(default = False)
     # if above is answered yes
     deathDate = models.CharField(blank = True, max_length=10)
     placeOfDeath = models.CharField(max_length=50,blank=True)
     causeOfDeath = models.TextField(max_length=300,blank=True)
-    type_data = models.CharField(max_length=50,default = "Production")
+    type_data = models.CharField(max_length=50,default = "Development")
+
+    #Anemia Fileds
+    wbc_count = models.DecimalField(max_digits=5, decimal_places=2,blank = True)
+    diffrential_count = JSONField(null = True)
+    hb = models.DecimalField(max_digits=5, decimal_places=2,blank = True)
+    plat_count = models.DecimalField( max_digits=5, decimal_places=2,blank=True)
