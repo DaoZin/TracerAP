@@ -258,8 +258,8 @@ def GetStats(request):
         Patientlist = Patient.objects.all()
 
         SC = {
-            "Normal": (Patientlist.filter(serumCreatinine__lte=2.0).count()),
-            "MI": Patientlist.filter(serumCreatinine__range=(2.0, 5.9)).count(),
+            "Normal": (Patientlist.filter(serumCreatinine__range=(0,2.0)).count()),
+            "MI": Patientlist.filter(serumCreatinine__range=(2.1, 5.9)).count(),
             "Severe": Patientlist.filter(serumCreatinine__gt=5.9).count(),
         }
 
