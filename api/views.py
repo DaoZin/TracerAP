@@ -43,7 +43,7 @@ def APIView(request):
     "token_jwt_get/",
     "token_jwt_refresh/",
     "token_jwt_verify/",
-    "GetPVGT/",
+    "GetPVTG/",
     "GetPE/",
     "GetStats/",
     ]
@@ -216,11 +216,18 @@ def GetPatientData_Village(request):
 
 # Matrix Analysis
 @api_view(["GET"])
-def GetPVGT(request):
+def GetPVTG(request):
     try:
-        PVGT_count = Patient.objects.filter(PVGT__iexact="ST").count()
+        ST_count = Patient.objects.filter(PVGT__iexact="ST").count()
+        NST_count = Patient.objects.filter(PVGT__iexact="NST").count()
         total_count = Patient.objects.all().count()
-        res = {"total": total_count, "PVGT": PVGT_count}
+        PVTG_count = total_count - (ST_count+NST_count)
+        res = {
+            "ST":ST_count,
+            "NST":NST_count,
+            "PVTG":PVTG_count,
+            "Total":total_count
+        }
         return Response(res, status=200)
     except Exception as e:
         return Response(e)

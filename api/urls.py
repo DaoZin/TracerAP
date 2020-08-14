@@ -33,7 +33,7 @@ urlpatterns = [
     # path('DroidDump/',views.DroidDump,name = "DroidDump"),
 
     #Metrics URLS
-    path('GetPVGT/', views.GetPVGT, name='GetPVGT'),
+    path('GetPVTG/', views.GetPVTG, name='GetPVTG'),
     path('GetPE/', views.GetPE, name='GetPE'),
     path('GetStats/', views.GetStats, name='GetStats'),
 ]
