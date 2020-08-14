@@ -218,7 +218,7 @@ def GetPatientData_Village(request):
 @api_view(["GET"])
 def GetPVGT(request):
     try:
-        PVGT_count = Patient.objects.filter(PVGT__iexact="YES").count()
+        PVGT_count = Patient.objects.filter(PVGT__iexact="ST").count()
         total_count = Patient.objects.all().count()
         res = {"total": total_count, "PVGT": PVGT_count}
         return Response(res, status=200)
