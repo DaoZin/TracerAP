@@ -22,19 +22,19 @@ class Patient (models.Model):
     age = models.SmallIntegerField(default=0)
     gender = models.CharField(default='NaN', max_length=3) # M=> Male/F=>Female/NB=>NonBinary
     weight = models.DecimalField(default = 0.0,decimal_places = 2,max_digits = 4,blank=True)
-    height = models.DecimalField(default = 0.0,decimal_places = 2,max_digits=4,blank = True)
+    height = models.DecimalField(default = 0.0,decimal_places = 2,max_digits=5,blank = True)
     bloodgroup = models.CharField(default=None, max_length=4)
     PVTG = models.CharField(default=None, max_length=3)
     #Foreign Keys
-    mandal = models.ForeignKey(Mandal,on_delete=models.CASCADE,default = None)
-    phc = models.ForeignKey(PHC,on_delete=models.CASCADE,default = None)
-    villagesec = models.ForeignKey(Village_sec,on_delete=models.CASCADE,default = None)
-    village = models.ForeignKey(Village, on_delete=models.CASCADE,default = None)
+    mandal = models.ForeignKey(Mandal,on_delete=models.CASCADE,default = None,null = True)
+    phc = models.ForeignKey(PHC,on_delete=models.CASCADE,default = None,null = True)
+    villagesec = models.ForeignKey(Village_sec,on_delete=models.CASCADE,default = None,null = True)
+    village = models.ForeignKey(Village, on_delete=models.CASCADE,default = None,null = True)
     # single/married/separated/divorced/widowed
-    maritalstatus = models.CharField(default=None, max_length=15)
+    maritalstatus = models.CharField(default=None, max_length=15,null = True)
 
     #Basic Vitals
-    # BasicVitals = JSONField(null = True)
+    BasicVitals = JSONField(null = True)
 
     #FORMAT =
     #{
@@ -45,7 +45,7 @@ class Patient (models.Model):
         # RespRate : "x",
     # }
     
-    # BasicSymptoms = JSONField(null = True)
+    BasicSymptoms = JSONField(null = True)
 
     #FORMAT =
     #{
@@ -60,7 +60,7 @@ class Patient (models.Model):
         # others : "Text"
     # }
     
-    # report = JSONField(null = True)
+    report = JSONField(null = True)
     #Free For ALl
     deworming = models.BooleanField(default=False)
     patient_status = models.CharField(default="Closed", max_length=50) #Critical/Moderate/Mild

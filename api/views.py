@@ -22,6 +22,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseServerError
 from django.utils.crypto import get_random_string
 from django.views.decorators.csrf import csrf_exempt
+from django.db import IntegrityError
 
 # LIST APIs
 @api_view(["GET"])
@@ -121,8 +122,9 @@ def AddPatient(request):
         serializer = PatientSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=200)
+            return Response(serializer.data,status = 200)           
         else:
+            print(serializer.errors)
             return Response(serializer.errors, status=400)
     except Exception as e:
         return Response(e)
