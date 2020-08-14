@@ -32,7 +32,7 @@
     "dateOfAdmit": "",
     "refered": false,
     "referredto": "",
-    "status": "",
+    "ref_status": "",
     "treatmentDone": "",
     "discharge": "",
     "dischargeStatus": "",
