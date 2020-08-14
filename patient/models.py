@@ -64,7 +64,7 @@ class Patient (models.Model):
     #Free For ALl
     deworming = models.BooleanField(default=False)
     patient_status = models.CharField(default="Closed", max_length=50) #Critical/Moderate/Mild
-
+    habits = JSONField(null = True)
 
     #Pedal Fields
     pedalEdema = models.CharField(max_length=2,blank = True)
