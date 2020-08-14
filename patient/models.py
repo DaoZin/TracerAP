@@ -24,7 +24,7 @@ class Patient (models.Model):
     weight = models.DecimalField(default = 0.0,decimal_places = 2,max_digits = 4,blank=True)
     height = models.DecimalField(default = 0.0,decimal_places = 2,max_digits=5,blank = True)
     bloodgroup = models.CharField(default=None, max_length=4)
-    PVTG = models.CharField(default=None, max_length=3)
+    PVTG = models.CharField(default=None, max_length=5)
     #Foreign Keys
     mandal = models.ForeignKey(Mandal,on_delete=models.CASCADE,default = None,null = True)
     phc = models.ForeignKey(PHC,on_delete=models.CASCADE,default = None,null = True)
