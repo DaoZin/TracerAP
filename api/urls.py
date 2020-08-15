@@ -9,6 +9,9 @@ from . import views
 urlpatterns = [
     path('',views.APIView,name = "APIList"), 
     path('GetAllVillage/',views.GetAllVillage,name = "GetAllVillage"), 
+    path('GetAllVillageSec/',views.GetAllVillageSec,name = "GetAllVillageSec"), 
+    path('GetAllPHC/',views.GetAllPHC,name = "GetAllPHC"), 
+    path('GetAllMandal/',views.GetAllMandal,name = "GetAllMandal"), 
     # path('parseVillage/',views.parseVillage,name = "parseVillage"),
     # path('parseVillageSec/',views.parseVillageSec,name = "parseVillageSec"),
     # path('addmandal/',views.addmandal,name = "addmandal"),

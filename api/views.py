@@ -170,6 +170,36 @@ def GetAllVillage(request):
     except Exception as e:
         return Response(e)
 
+@api_view(["GET"])
+def GetAllVillageSec(request):
+    try:
+        villageseclist = list(Village_sec.objects.all())
+        serializer = VillageSecSerializer(data=villageseclist, many=True)
+        serializer.is_valid()
+        return Response(serializer.data, status=200)
+    except Exception as e:
+        return Response(e)
+
+@api_view(["GET"])
+def GetAllPHC(request):
+    try:
+        PHClist = list(PHC.objects.all())
+        serializer = PHCSerializer(data=PHClist, many=True)
+        serializer.is_valid()
+        return Response(serializer.data, status=200)
+    except Exception as e:
+        return Response(e)
+
+@api_view(["GET"])
+def GetAllMandal(request):
+    try:
+        Mandallist = list(Mandal.objects.all())
+        serializer = MandalSerializer(data=Mandallist, many=True)
+        serializer.is_valid()
+        return Response(serializer.data, status=200)
+    except Exception as e:
+        return Response(e)
+
 
 @api_view(["GET"])
 def GetAllPatient(request):
