@@ -29,12 +29,15 @@ from django.db import IntegrityError
 def APIView(request):
     APIUrls = [ 
     "GetAllVillage/", 
+    "GetAllPatient/",
+    "GetAllPHC/",
+    "GetAllVillageSec/",
+     "GetAllMandal/",
     "AddPatient/",
     "AddPatients/",
     "DeletePatient/",
     "UpdatePatient/",
     "GetPatient/",
-    "GetAllPatient/",
     "GetPHCData/",
     "GetVillageSecData/",
     "GetVillageData/",
@@ -122,7 +125,6 @@ def UpdatePatient(request):
         return Response(e)
 
 
-# DATA MATRIX APIs
 # PHC for Mandal
 @api_view(["POST"])
 def GetPHCData(request):
@@ -159,7 +161,7 @@ def GetVillageData(request):
         return Response(e)
 
 
-# List of all Villages
+# Get All APIs
 @api_view(["GET"])
 def GetAllVillage(request):
     try:
@@ -284,9 +286,11 @@ def GetPE(request):
 
 @api_view(["GET"])
 def GetStats(request):
-    try:
+    if request.data.get("params") == "PVTG" :
+        Patientlist = Patient.objects.filter(PVTG__iexact = "PVTG")
+    else:
         Patientlist = Patient.objects.all()
-
+    try:      
         SC = {
             "Normal": (Patientlist.filter(serumCreatinine__range=(0,2.0)).count()),
             "MI": Patientlist.filter(serumCreatinine__range=(2.1, 5.9)).count(),
