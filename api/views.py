@@ -32,7 +32,7 @@ def APIView(request):
     "GetAllPatient/",
     "GetAllPHC/",
     "GetAllVillageSec/",
-     "GetAllMandal/",
+    "GetAllMandal/",
     "AddPatient/",
     "AddPatients/",
     "DeletePatient/",
@@ -328,6 +328,7 @@ def GetStats(request):
             "SerumCreatinine": SC,
             "BloodUrea": BU,
             "UricAcid": UA,
+            "BUN":BUN,
             "Electrolytes_Sodium": ElecSod,
             "Electrolytes_Potassium": ElecPotas,
         }

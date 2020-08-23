@@ -24,14 +24,18 @@ class Patient (models.Model):
     weight = models.DecimalField(default = 0.0,decimal_places = 2,max_digits = 4,blank=True)
     height = models.DecimalField(default = 0.0,decimal_places = 2,max_digits=5,blank = True)
     bloodgroup = models.CharField(default=None, max_length=4)
+    patient_status = models.CharField(default="Closed", max_length=50) #Critical/Moderate/Mild
+    maritalstatus = models.CharField(default=None, max_length=15,null = True) # single/married/separated/divorced/widowed
     PVTG = models.CharField(default=None, max_length=5)
+    kidneystatus = models.CharField(max_length=50,blank = True) # good/abnormal
+    deworming = models.BooleanField(default=False)
     #Foreign Keys
     mandal = models.ForeignKey(Mandal,on_delete=models.CASCADE,default = None,null = True)
     phc = models.ForeignKey(PHC,on_delete=models.CASCADE,default = None,null = True)
     villagesec = models.ForeignKey(Village_sec,on_delete=models.CASCADE,default = None,null = True)
     village = models.ForeignKey(Village, on_delete=models.CASCADE,default = None,null = True)
-    # single/married/separated/divorced/widowed
-    maritalstatus = models.CharField(default=None, max_length=15,null = True)
+    type_data = models.CharField(max_length=50,default = "Development")
+ 
 
     #Basic Vitals
     BasicVitals = JSONField(null = True)
@@ -61,28 +65,41 @@ class Patient (models.Model):
     # }
     
     report = JSONField(null = True)
-    #Free For ALl
-    deworming = models.BooleanField(default=False)
-    patient_status = models.CharField(default="Closed", max_length=50) #Critical/Moderate/Mild
+    #Free For ALL
     habits = JSONField(null = True)
+    #FORMAT = 
+    #{ 
+    #    smoking : bool,
+    #    drinking : bool
+    #}   
 
     #Pedal Fields
     pedalEdema = models.CharField(max_length=2,blank = True)
     # if above is yes then ask single/bilateral
-    pedaltype = models.CharField(max_length=50,blank = True)
-    dateoftesting = models.CharField(blank = True, max_length=10)
-    serumCreatinine = models.DecimalField(max_digits=5, decimal_places=1,blank = True)
-    bloodUrea = models.DecimalField(max_digits=5, decimal_places=1,blank = True)
-    uricAcid = models.DecimalField(max_digits=5, decimal_places=1,blank=True)
-    electrolytes_sodium = models.DecimalField(max_digits=5, decimal_places=1,blank=True)
-    electrolytes_potassium = models.DecimalField(
-        max_digits=5, decimal_places=1,blank = True)
-    bun = models.DecimalField(max_digits=5, decimal_places=1,blank=True)
+    pedal_profile = JSONField(null = True)
     
-    kidneystatus = models.CharField(max_length=50,blank = True) # good/abnormal
-    # in case abnormal ask following
-    ailments = models.TextField(max_length=100,blank=True)
-    dialysis = models.BooleanField(default = False)
+    #FORMAT =
+    #{
+        # pedaltype = models.CharField(max_length=50, blank=True)
+        # dateoftesting = models.CharField(blank=True, max_length=10)
+        # serumCreatinine = models.DecimalField(
+        #     max_digits=5, decimal_places=1, blank=True)
+        # bloodUrea = models.DecimalField(max_digits=5, decimal_places=1, blank=True)
+        # uricAcid = models.DecimalField(max_digits=5, decimal_places=1, blank=True)
+        # electrolytes_sodium = models.DecimalField(
+        #     max_digits=5, decimal_places=1, blank=True)
+        # electrolytes_potassium = models.DecimalField(
+        #     max_digits=5, decimal_places=1, blank=True)
+        # bun = models.DecimalField(max_digits=5, decimal_places=1, blank=True)
+    #}
+     
+    KidneyProfile = JSONField(null = True)
+    #FORMAT = 
+    {
+        # in case abnormal ask following
+        # ailments = models.TextField(max_length=100,blank=True)
+        # dialysis = models.BooleanField(default = False)
+    }
     doctorreq = models.BooleanField(default = False)
     # if above is yes then ask refer to the following hospital
     hospitalAdmit = models.CharField(max_length=50,blank = True)
@@ -97,13 +114,18 @@ class Patient (models.Model):
     dischargeStatus = models.TextField(max_length=500,blank=True)
     deceased = models.BooleanField(default = False)
     # if above is answered yes
-    deathDate = models.CharField(blank = True, max_length=10)
-    placeOfDeath = models.CharField(max_length=50,blank=True)
-    causeOfDeath = models.TextField(max_length=300,blank=True)
-    type_data = models.CharField(max_length=50,default = "Development")
-
-    #Anemia Fileds
-    wbc_count = models.DecimalField(max_digits=5, decimal_places=2,blank = True)
-    diffrential_count = JSONField(null = True)
-    hb = models.DecimalField(max_digits=5, decimal_places=2,blank = True)
-    plat_count = models.DecimalField( max_digits=5, decimal_places=2,blank=True)
+    DetailsDeath = JSONField(null = True)
+    #FORMAT =
+    {
+        # deathDate = models.CharField(blank = True, max_length=10)
+        # placeOfDeath = models.CharField(max_length=50,blank=True)
+        # causeOfDeath = models.TextField(max_length=300,blank=True)
+    }
+    AnemiaProfile = JSONField(null = True)
+    #What it will look like:
+    #{
+    #    wbc_count = models.DecimalField(max_digits=5, decimal_places=2,blank = True)
+    #    diffrential_count = JSONField(null = True)
+    #    hb = models.DecimalField(max_digits=5, decimal_places=2,blank = True)
+    #    plat_count = models.DecimalField( max_digits=5, decimal_places=2,blank=True)
+    #}
