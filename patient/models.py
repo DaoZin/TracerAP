@@ -1,6 +1,5 @@
 import time
 from django.db import models
-# from django.contrib.postgres.fields import JSONField
 from django.contrib.auth.models import User
 from village.models import Village
 from mandal.models import Mandal
@@ -24,18 +23,14 @@ class Patient (models.Model):
     weight = models.DecimalField(default = 0.0,decimal_places = 2,max_digits = 4,blank=True)
     height = models.DecimalField(default = 0.0,decimal_places = 2,max_digits=5,blank = True)
     bloodgroup = models.CharField(default=None, max_length=4)
-    patient_status = models.CharField(default="Closed", max_length=50) #Critical/Moderate/Mild
-    maritalstatus = models.CharField(default=None, max_length=15,null = True) # single/married/separated/divorced/widowed
     PVTG = models.CharField(default=None, max_length=5)
-    kidneystatus = models.CharField(max_length=50,blank = True) # good/abnormal
-    deworming = models.BooleanField(default=False)
     #Foreign Keys
     mandal = models.ForeignKey(Mandal,on_delete=models.CASCADE,default = None,null = True)
     phc = models.ForeignKey(PHC,on_delete=models.CASCADE,default = None,null = True)
     villagesec = models.ForeignKey(Village_sec,on_delete=models.CASCADE,default = None,null = True)
     village = models.ForeignKey(Village, on_delete=models.CASCADE,default = None,null = True)
-    type_data = models.CharField(max_length=50,default = "Development")
- 
+    # single/married/separated/divorced/widowed
+    maritalstatus = models.CharField(default=None, max_length=15,null = True)
 
     #Basic Vitals
     BasicVitals = models.JSONField(null = True)
@@ -64,6 +59,7 @@ class Patient (models.Model):
         # others : "Text"
     # }
     
+
     report = models.JSONField(null = True)
     #Free For ALL
     habits = models.JSONField(null = True)
@@ -73,9 +69,11 @@ class Patient (models.Model):
     #    drinking : bool
     #}   
 
+
     #Pedal Fields
     pedalEdema = models.CharField(max_length=2,blank = True)
     # if above is yes then ask single/bilateral
+
     pedal_profile = models.JSONField(null = True)
     
     #FORMAT =
@@ -102,6 +100,7 @@ class Patient (models.Model):
         # dialysis = models.BooleanField(default = False)
     }
 
+
     doctorreq = models.BooleanField(default = False)
     # if above is yes then ask refer to the following hospital
     hospitalAdmit = models.CharField(max_length=50,blank = True)
@@ -116,6 +115,7 @@ class Patient (models.Model):
     dischargeStatus = models.TextField(max_length=500,blank=True)
     deceased = models.BooleanField(default = False)
     # if above is answered yes
+
     DetailsDeath = models.JSONField(null = True)
     #FORMAT =
     {
@@ -131,3 +131,4 @@ class Patient (models.Model):
     #    hb = models.DecimalField(max_digits=5, decimal_places=2,blank = True)
     #    plat_count = models.DecimalField( max_digits=5, decimal_places=2,blank=True)
     #}
+

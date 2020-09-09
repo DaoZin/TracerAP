@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     # 'rest_framework.authtoken',
     'patient',
+    'officer',
     'doctor',
     'hospital',
     'mandal',
@@ -114,6 +115,7 @@ JWT_AUTH ={
 
 CORS_ORIGIN_ALLOW_ALL = True # added to solve CORS
 
+AUTH_USER_MODEL = 'officer.Officer'
 
 ROOT_URLCONF = 'TracerIND.urls'
 
