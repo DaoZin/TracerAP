@@ -1,6 +1,6 @@
 import time
 from django.db import models
-from django.contrib.postgres.fields import JSONField
+# from django.contrib.postgres.fields import models.JSONField
 from django.contrib.auth.models import User
 from village.models import Village
 from mandal.models import Mandal
@@ -16,7 +16,7 @@ class Patient (models.Model):
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
     phone = models.CharField(max_length=10)
-    adhaar = models.CharField(max_length=16, blank=True)  # 16 digit num
+    adhaar = models.CharField(max_length=256, blank=True)  #hashedData
     relation = models.CharField(max_length=30)  # SonOf/DaughterOf/WifeOf
     gaurdian_name = models.CharField(max_length=50)
     age = models.SmallIntegerField(default=0)
@@ -41,7 +41,7 @@ class Patient (models.Model):
     maritalstatus = models.CharField(default=None, max_length=15, null=True)
 
     # Basic Vitals
-    BasicVitals = JSONField(null=True)
+    BasicVitals = models.JSONField(null=True)
 
     # FORMAT =
     # {
@@ -52,7 +52,7 @@ class Patient (models.Model):
     # RespRate : "x",
     # }
 
-    BasicSymptoms = JSONField(null=True)
+    BasicSymptoms = models.JSONField(null=True)
 
     # FORMAT =
     # {
@@ -67,9 +67,9 @@ class Patient (models.Model):
     # others : "Text"
     # }
 
-    report = JSONField(null=True)
+    report = models.JSONField(null=True)
     # Free For ALL
-    habits = JSONField(null=True)
+    habits = models.JSONField(null=True)
     # FORMAT =
     # {
     #    smoking : bool,
@@ -80,7 +80,7 @@ class Patient (models.Model):
     pedalEdema = models.CharField(max_length=2, blank=True)
     # if above is yes then ask single/bilateral
 
-    pedal_profile = JSONField(null=True)
+    pedal_profile = models.JSONField(null=True)
 
     # FORMAT =
     # {
@@ -97,7 +97,7 @@ class Patient (models.Model):
     # bun = models.DecimalField(max_digits=5, decimal_places=1, blank=True)
     # }
 
-    KidneyProfile = JSONField(null=True)
+    KidneyProfile = models.JSONField(null=True)
 
     # FORMAT =
     {
@@ -121,18 +121,18 @@ class Patient (models.Model):
     deceased = models.BooleanField(default=False)
     # if above is answered yes
 
-    DetailsDeath = JSONField(null=True)
+    DetailsDeath = models.JSONField(null=True)
     # FORMAT =
     {
         # deathDate = models.CharField(blank = True, max_length=10)
         # placeOfDeath = models.CharField(max_length=50,blank=True)
         # causeOfDeath = models.TextField(max_length=300,blank=True)
     }
-    AnemiaProfile = JSONField(null=True)
+    AnemiaProfile = models.JSONField(null=True)
     # What it will look like:
     # {
     #    wbc_count = models.DecimalField(max_digits=5, decimal_places=2,blank = True)
-    #    diffrential_count = JSONField(null = True)
+    #    diffrential_count = models.JSONField(null = True)
     #    hb = models.DecimalField(max_digits=5, decimal_places=2,blank = True)
     #    plat_count = models.DecimalField( max_digits=5, decimal_places=2,blank=True)
     # }
