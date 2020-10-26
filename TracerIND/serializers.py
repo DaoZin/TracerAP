@@ -15,7 +15,7 @@ class PatientInputSerializer(serializers.ModelSerializer):
 class PatientOutputSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
-        exclude = ('adhaar', )
+        exclude = ('adhaar', 'PVTG', )
 
 class DoctorSerializer(serializers.ModelSerializer):
     class Meta:
