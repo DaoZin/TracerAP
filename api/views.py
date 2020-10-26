@@ -1,7 +1,8 @@
 import json
 import requests
 from TracerIND.serializers import (
-    PatientSerializer,
+    PatientInputSerializer,
+    PatientOutputSerializer,
     MandalSerializer,
     PHCSerializer,
     VillageSecSerializer,
@@ -61,7 +62,7 @@ def APIView(request):
 def AddPatient(request):
 
     try:
-        serializer = PatientSerializer(data=request.data)
+        serializer = PatientInputSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=200)
@@ -86,7 +87,7 @@ def AddPatients(request):
             except Exception as e:
                 pass
             p.update(village=p_village)
-            serializer = PatientSerializer(data=p)
+            serializer = PatientInputSerializer(data=p)
             if serializer.is_valid():
                 serializer.save()
             else:
@@ -113,7 +114,7 @@ def UpdatePatient(request):
     try:
         pk = request.data.get("pkid")
         patient = Patient.objects.get(pkid=pk)
-        serializer = PatientSerializer(
+        serializer = PatientInputSerializer(
             instance=patient, data=request.data, partial=True
         )
         if serializers.is_valid():
@@ -207,7 +208,7 @@ def GetAllMandal(request):
 def GetAllPatient(request):
     try:
         patientlist = Patient.objects.all()
-        serializer = PatientSerializer(data=patientlist, many=True)
+        serializer = PatientOutputSerializer(data=patientlist, many=True)
         serializer.is_valid()
         return Response(serializer.data, status=200)
     except Exception as e:
@@ -219,7 +220,7 @@ def GetPatient(request):
     try:
         pk = request.data.get("pkid")
         patient = Patient.objects.get(pkid=pk)
-        serializer = PatientSerializer(patient)
+        serializer = PatientOutputSerializer(patient)
         return Response(serializer.data, status=200)
     except Exception as e:
         return Response(e)
@@ -239,7 +240,7 @@ def GetPatientData_Village(request):
                 )
             )
         )
-        serializer = PatientSerializer(data=patientlist, many=True)
+        serializer = PatientOutputSerializer(data=patientlist, many=True)
         serializer.is_valid()
         return Response(serializer.data, status=200)
     except Exception as e:

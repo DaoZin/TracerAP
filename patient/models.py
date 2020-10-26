@@ -22,7 +22,7 @@ class Patient (models.Model):
     age = models.SmallIntegerField(default=0)
     # M=> Male/F=>Female/NB=>NonBinary
     gender = models.CharField(default='NaN', max_length=3)
-    address = models.CharField(max_length=50)
+    address = models.CharField(max_length=500)
     weight = models.DecimalField(
         default=0.0, decimal_places=2, max_digits=4, blank=True)
     height = models.DecimalField(
