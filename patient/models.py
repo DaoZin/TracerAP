@@ -34,7 +34,7 @@ class Patient (models.Model):
         Mandal, on_delete=models.CASCADE, default=None, null=True)
     phc = models.ForeignKey(
         PHC, on_delete=models.CASCADE, default=None, null=True)
-    villagesec = models.ForeignKey(
+    villagesec = models.ForeignKey(  
         Village_sec, on_delete=models.CASCADE, default=None, null=True)
     village = models.ForeignKey(
         Village, on_delete=models.CASCADE, default=None, null=True)

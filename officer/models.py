@@ -43,7 +43,7 @@ class Officer(AbstractBaseUser):
     date_joined = models.DateTimeField(
         verbose_name='date joined', auto_now_add=True)
     last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
-    access_level = models.ForeignKey(PHC, verbose_name="Access_PHC", on_delete=models.CASCADE,null = True)
+    access_level = models.ForeignKey(PHC, verbose_name="Access_PHC", on_delete=models.CASCADE,null = True,blank = True)
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
