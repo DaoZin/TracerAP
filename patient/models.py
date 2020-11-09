@@ -15,7 +15,7 @@ class Patient (models.Model):
 # BASIC DETAILS
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
-    phone = models.CharField(max_length=10)
+    phone = models.CharField(max_length=10,blank = True,null = True)
     adhaar = models.CharField(max_length=256, blank=True)  #hashedData
     relation = models.CharField(max_length=30)  # SonOf/DaughterOf/WifeOf
     gaurdian_name = models.CharField(max_length=50)
