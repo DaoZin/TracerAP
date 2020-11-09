@@ -137,3 +137,4 @@ class Patient (models.Model):
     #    hb = models.DecimalField(max_digits=5, decimal_places=2,blank = True)
     #    plat_count = models.DecimalField( max_digits=5, decimal_places=2,blank=True)
     # }
+    type_data = models.CharField(max_length=50,blank = True,null = True)

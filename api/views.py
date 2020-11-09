@@ -271,7 +271,7 @@ def GetPE(request):
     try:
         PE = Patient.objects.filter(pedalEdema__iexact="Y")
         PE_count = PE.count()
-        bilat = PE.filter(pedaltype__iexact="bilateral").count()
+        bilat = PE.filter(pedal_profile__pedaltype__iexact = "bilateral").count()
         single = PE_count - bilat
         total_count = Patient.objects.all().count()
         res = {
@@ -293,36 +293,36 @@ def GetStats(request):
         Patientlist = Patient.objects.all()
     try:      
         SC = {
-            "Normal": (Patientlist.filter(serumCreatinine__range=(0,2.0)).count()),
-            "MI": Patientlist.filter(serumCreatinine__range=(2.1, 5.9)).count(),
-            "Severe": Patientlist.filter(serumCreatinine__gt=5.9).count(),
+            "Normal": (Patientlist.filter(pedal_profile__serumCreatinine__range=(0,2.0)).count()),
+            "MI": Patientlist.filter(pedal_profile__serumCreatinine__range=(2.1, 5.9)).count(),
+            "Severe": Patientlist.filter(pedal_profile__serumCreatinine__gt=5.9).count(),
         }
 
         BU = {
-            "Normal": Patientlist.filter(bloodUrea__range=(15, 40)).count(),
-            "Severe": Patientlist.filter(bloodUrea__gt=40.0).count(),
+            "Normal": Patientlist.filter(pedal_profile__bloodUrea__range=(15, 40)).count(),
+            "Severe": Patientlist.filter(pedal_profile__bloodUrea__gt=40.0).count(),
         }
 
         ElecSod = {
-            "Normal": Patientlist.filter(electrolytes_sodium__range=(135, 155)).count(),
-            "Severe": Patientlist.filter(electrolytes_sodium__gt=155.0).count(),
+            "Normal": Patientlist.filter(pedal_profile__electrolytes_sodium__range=(135, 155)).count(),
+            "Severe": Patientlist.filter(pedal_profile__electrolytes_sodium__gt=155.0).count(),
         }
 
         ElecPotas = {
             "Normal": Patientlist.filter(
-                electrolytes_potassium__range=(3.5, 5.5)
+                pedal_profile__electrolytes_potassium__range=(3.5, 5.5)
             ).count(),
-            "Severe": Patientlist.filter(electrolytes_potassium__gt=5.5).count(),
+            "Severe": Patientlist.filter(pedal_profile__electrolytes_potassium__gt=5.5).count(),
         }
 
         BUN = {
-            "Normal": Patientlist.filter(bun__range=(8, 23)).count(),
-            "Severe": Patientlist.filter(bun__gt=23.0).count(),
+            "Normal": Patientlist.filter(pedal_profile__bun__range=(8, 23)).count(),
+            "Severe": Patientlist.filter(pedal_profile__bun__gt=23.0).count(),
         }
 
         UA = {
-            "Normal": Patientlist.filter(uricAcid__range=(2.6, 6.0)).count(),
-            "Severe": Patientlist.filter(uricAcid__gt=6.0).count(),
+            "Normal": Patientlist.filter(pedal_profile__uricAcid__range=(2.6, 6.0)).count(),
+            "Severe": Patientlist.filter(pedal_profile__uricAcid__gt=6.0).count(),
         }
 
         res = {
