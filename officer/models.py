@@ -15,6 +15,7 @@ class MyOfficerManager(BaseUserManager):
         user = self.model(
             email=self.normalize_email(email),
             username=username,
+            password=password,
             access_level = access_level,
         )
 
