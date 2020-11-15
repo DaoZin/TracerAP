@@ -1,6 +1,6 @@
 # TracerIND
 
-TracerIND is CITF's own Medical History analysis and tracking tool. Based on a Django DRF - ReactJS - Nginx Configuration
+TracerIND is a Medical History analysis and tracking tool. Based on a Django DRF - ReactJS - Nginx Configuration
 
 ## Installation
 
