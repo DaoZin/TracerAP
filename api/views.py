@@ -1,7 +1,8 @@
 import json
 import requests
 from TracerIND.serializers import (
-    PatientSerializer,
+    PatientInputSerializer,
+    PatientOutputSerializer,
     MandalSerializer,
     PHCSerializer,
     VillageSecSerializer,
@@ -32,7 +33,7 @@ def APIView(request):
     "GetAllPatient/",
     "GetAllPHC/",
     "GetAllVillageSec/",
-     "GetAllMandal/",
+    "GetAllMandal/",
     "AddPatient/",
     "AddPatients/",
     "DeletePatient/",
@@ -61,7 +62,7 @@ def APIView(request):
 def AddPatient(request):
 
     try:
-        serializer = PatientSerializer(data=request.data)
+        serializer = PatientInputSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=200)
@@ -86,7 +87,7 @@ def AddPatients(request):
             except Exception as e:
                 pass
             p.update(village=p_village)
-            serializer = PatientSerializer(data=p)
+            serializer = PatientInputSerializer(data=p)
             if serializer.is_valid():
                 serializer.save()
             else:
@@ -113,7 +114,7 @@ def UpdatePatient(request):
     try:
         pk = request.data.get("pkid")
         patient = Patient.objects.get(pkid=pk)
-        serializer = PatientSerializer(
+        serializer = PatientInputSerializer(
             instance=patient, data=request.data, partial=True
         )
         if serializers.is_valid():
@@ -205,22 +206,37 @@ def GetAllMandal(request):
 
 @api_view(["GET"])
 def GetAllPatient(request):
-    try:
-        patientlist = Patient.objects.all()
-        serializer = PatientSerializer(data=patientlist, many=True)
-        serializer.is_valid()
-        return Response(serializer.data, status=200)
-    except Exception as e:
-        return Response(e)
+    access = request.user.officer.access_level
+    if not access:    
+        try:
+            patientlist = Patient.objects.all()
+            serializer = PatientOutputSerializer(data=patientlist, many=True)
+            serializer.is_valid()
+            return Response(serializer.data, status=200)
+        except Exception as e:
+            return Response(e)
+    else:
+        try:
+            patientlist = Patient.objects.filter(phc = access)
+            print(patientlist)
+            serializer = PatientOutputSerializer(data = patientlist,many = True)
+            serializer.is_valid()
+            return Response(serializer.data , status = 200)
+        except Exception as e:
+            return Response(e)
 
 
 @api_view(["POST"])
 def GetPatient(request):
+    access = request.user.officer.access_level
     try:
         pk = request.data.get("pkid")
         patient = Patient.objects.get(pkid=pk)
-        serializer = PatientSerializer(patient)
-        return Response(serializer.data, status=200)
+        if patient.phc == access:
+            serializer = PatientOutputSerializer(patient)
+            return Response(serializer.data, status=200)
+        else:
+            return Response({"Access":"Denied"},status=400)
     except Exception as e:
         return Response(e)
 
@@ -239,7 +255,7 @@ def GetPatientData_Village(request):
                 )
             )
         )
-        serializer = PatientSerializer(data=patientlist, many=True)
+        serializer = PatientOutputSerializer(data=patientlist, many=True)
         serializer.is_valid()
         return Response(serializer.data, status=200)
     except Exception as e:
@@ -270,7 +286,7 @@ def GetPE(request):
     try:
         PE = Patient.objects.filter(pedalEdema__iexact="Y")
         PE_count = PE.count()
-        bilat = PE.filter(pedaltype__iexact="bilateral").count()
+        bilat = PE.filter(pedal_profile__pedaltype__iexact = "bilateral").count()
         single = PE_count - bilat
         total_count = Patient.objects.all().count()
         res = {
@@ -286,55 +302,55 @@ def GetPE(request):
 
 @api_view(["GET"])
 def GetStats(request):
+    access = request.user.officer.access_level
     if request.data.get("params") == "PVTG" :
         Patientlist = Patient.objects.filter(PVTG__iexact = "PVTG")
     else:
         Patientlist = Patient.objects.all()
+
+    Patientlist=Patientlist if not access else Patientlist.filter(phc=access)
     try:      
         SC = {
-            "Normal": (Patientlist.filter(serumCreatinine__range=(0,2.0)).count()),
-            "MI": Patientlist.filter(serumCreatinine__range=(2.1, 5.9)).count(),
-            "Severe": Patientlist.filter(serumCreatinine__gt=5.9).count(),
+            "Normal": (Patientlist.filter(pedal_profile__serumCreatinine__lt=(2.0)).count()),
+            "MI": Patientlist.filter(pedal_profile__serumCreatinine__range=(2.1, 5.9)).count(),
+            "Severe": Patientlist.filter(pedal_profile__serumCreatinine__gt=5.9).count(),
         }
 
         BU = {
-            "Normal": Patientlist.filter(bloodUrea__range=(15, 40)).count(),
-            "Severe": Patientlist.filter(bloodUrea__gt=40.0).count(),
+            "Normal": Patientlist.filter(pedal_profile__bloodUrea__range=(15, 40)).count(),
+            "Severe": Patientlist.filter(pedal_profile__bloodUrea__gt=40.0).count(),
         }
-
         ElecSod = {
-            "Normal": Patientlist.filter(electrolytes_sodium__range=(135, 155)).count(),
-            "Severe": Patientlist.filter(electrolytes_sodium__gt=155.0).count(),
+            "Normal": Patientlist.filter(pedal_profile__electrolytes_sodium__range=(135, 155)).count(),
+            "Severe": Patientlist.filter(pedal_profile__electrolytes_sodium__gt=155.0).count(),
         }
-
         ElecPotas = {
             "Normal": Patientlist.filter(
-                electrolytes_potassium__range=(3.5, 5.5)
+                pedal_profile__electrolytes_potassium__range=(3.5, 5.5)
             ).count(),
-            "Severe": Patientlist.filter(electrolytes_potassium__gt=5.5).count(),
+            "Severe": Patientlist.filter(pedal_profile__electrolytes_potassium__gt=5.5).count(),
         }
-
         BUN = {
-            "Normal": Patientlist.filter(bun__range=(8, 23)).count(),
-            "Severe": Patientlist.filter(bun__gt=23.0).count(),
+            "Normal": Patientlist.filter(pedal_profile__bun__range=(8, 23)).count(),
+            "Severe": Patientlist.filter(pedal_profile__bun__gt=23.0).count(),
         }
-
         UA = {
-            "Normal": Patientlist.filter(uricAcid__range=(2.6, 6.0)).count(),
-            "Severe": Patientlist.filter(uricAcid__gt=6.0).count(),
+            "Normal": Patientlist.filter(pedal_profile__uricAcid__range=(2.6, 6.0)).count(),
+            "Severe": Patientlist.filter(pedal_profile__uricAcid__gt=6.0).count(),
         }
-
         res = {
             "SerumCreatinine": SC,
             "BloodUrea": BU,
             "UricAcid": UA,
+            "BUN":BUN,
             "Electrolytes_Sodium": ElecSod,
             "Electrolytes_Potassium": ElecPotas,
         }
-
         return Response(res, status=200)
     except Exception as e:
         return Response(e)
+
+
 
 
 # FOR INIT PURPOSE

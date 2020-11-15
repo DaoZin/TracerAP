@@ -7,10 +7,15 @@ from PHC.models import PHC
 from village.models import Village
 from village_sec.models import Village_sec
 
-class PatientSerializer(serializers.ModelSerializer):
+class PatientInputSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
         fields = '__all__'
+
+class PatientOutputSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Patient
+        exclude = ('adhaar', 'PVTG', )
 
 class DoctorSerializer(serializers.ModelSerializer):
     class Meta:

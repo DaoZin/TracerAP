@@ -9,3 +9,7 @@ class PHC(models.Model):
     PHC_id = models.CharField(max_length=50, primary_key=True)
     name = models.CharField(max_length=50,unique=True)
     mandal = models.ForeignKey(Mandal,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+    

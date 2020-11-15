@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-
+from . import development_settings as env
 import os
 import datetime
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -20,14 +20,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'f-7=$cp7#_8@8s5-pjpxe!)vh=%qowo=ctqay9@za*gk1gc!i='
+SECRET_KEY = env.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.DEBUG
 
 
-ALLOWED_HOSTS = ['149.129.138.15','api-tracerind.covidindiataskforce.org',"*"]
-
+ALLOWED_HOSTS = env.ALLOWED_HOSTS
 
 
 # Application definition
@@ -42,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     # 'rest_framework.authtoken',
     'patient',
+    'officer',
     'doctor',
     'hospital',
     'mandal',
@@ -70,6 +70,7 @@ MIDDLEWARE = [
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAdminUser',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
@@ -139,19 +140,16 @@ WSGI_APPLICATION = 'TracerIND.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'tracerind',
-        'USER': 'postgres',
-        'PASSWORD': 'admin1234',
+        'USER': env.username,
+        'PASSWORD': env.password,
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -192,6 +190,10 @@ STATICFILES_DIRS = [
     ]
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'static')
-CORS_ORIGIN_ALLOW_ALL = True 
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+       'http://localhost:3000',
+       'https://tracerind.covidindiataskforce.org',
+)
 CORS_ALLOW_CREDENTIALS = True
 
