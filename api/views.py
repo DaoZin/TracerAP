@@ -206,22 +206,37 @@ def GetAllMandal(request):
 
 @api_view(["GET"])
 def GetAllPatient(request):
-    try:
-        patientlist = Patient.objects.all()
-        serializer = PatientOutputSerializer(data=patientlist, many=True)
-        serializer.is_valid()
-        return Response(serializer.data, status=200)
-    except Exception as e:
-        return Response(e)
+    access = request.user.officer.access_level
+    if not access:    
+        try:
+            patientlist = Patient.objects.all()
+            serializer = PatientOutputSerializer(data=patientlist, many=True)
+            serializer.is_valid()
+            return Response(serializer.data, status=200)
+        except Exception as e:
+            return Response(e)
+    else:
+        try:
+            patientlist = Patient.objects.filter(phc = access)
+            print(patientlist)
+            serializer = PatientOutputSerializer(data = patientlist,many = True)
+            serializer.is_valid()
+            return Response(serializer.data , status = 200)
+        except Exception as e:
+            return Response(e)
 
 
 @api_view(["POST"])
 def GetPatient(request):
+    access = request.user.officer.access_level
     try:
         pk = request.data.get("pkid")
         patient = Patient.objects.get(pkid=pk)
-        serializer = PatientOutputSerializer(patient)
-        return Response(serializer.data, status=200)
+        if patient.phc == access:
+            serializer = PatientOutputSerializer(patient)
+            return Response(serializer.data, status=200)
+        else:
+            return Response({"Access":"Denied"},status=400)
     except Exception as e:
         return Response(e)
 
@@ -287,13 +302,16 @@ def GetPE(request):
 
 @api_view(["GET"])
 def GetStats(request):
+    access = request.user.officer.access_level
     if request.data.get("params") == "PVTG" :
         Patientlist = Patient.objects.filter(PVTG__iexact = "PVTG")
     else:
         Patientlist = Patient.objects.all()
+
+    Patientlist=Patientlist if not access else Patientlist.filter(phc=access)
     try:      
         SC = {
-            "Normal": (Patientlist.filter(pedal_profile__serumCreatinine__range=(0,2.0)).count()),
+            "Normal": (Patientlist.filter(pedal_profile__serumCreatinine__lt=(2.0)).count()),
             "MI": Patientlist.filter(pedal_profile__serumCreatinine__range=(2.1, 5.9)).count(),
             "Severe": Patientlist.filter(pedal_profile__serumCreatinine__gt=5.9).count(),
         }
@@ -302,29 +320,24 @@ def GetStats(request):
             "Normal": Patientlist.filter(pedal_profile__bloodUrea__range=(15, 40)).count(),
             "Severe": Patientlist.filter(pedal_profile__bloodUrea__gt=40.0).count(),
         }
-
         ElecSod = {
             "Normal": Patientlist.filter(pedal_profile__electrolytes_sodium__range=(135, 155)).count(),
             "Severe": Patientlist.filter(pedal_profile__electrolytes_sodium__gt=155.0).count(),
         }
-
         ElecPotas = {
             "Normal": Patientlist.filter(
                 pedal_profile__electrolytes_potassium__range=(3.5, 5.5)
             ).count(),
             "Severe": Patientlist.filter(pedal_profile__electrolytes_potassium__gt=5.5).count(),
         }
-
         BUN = {
             "Normal": Patientlist.filter(pedal_profile__bun__range=(8, 23)).count(),
             "Severe": Patientlist.filter(pedal_profile__bun__gt=23.0).count(),
         }
-
         UA = {
             "Normal": Patientlist.filter(pedal_profile__uricAcid__range=(2.6, 6.0)).count(),
             "Severe": Patientlist.filter(pedal_profile__uricAcid__gt=6.0).count(),
         }
-
         res = {
             "SerumCreatinine": SC,
             "BloodUrea": BU,
@@ -333,10 +346,11 @@ def GetStats(request):
             "Electrolytes_Sodium": ElecSod,
             "Electrolytes_Potassium": ElecPotas,
         }
-
         return Response(res, status=200)
     except Exception as e:
         return Response(e)
+
+
 
 
 # FOR INIT PURPOSE
