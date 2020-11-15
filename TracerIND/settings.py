@@ -116,7 +116,6 @@ JWT_AUTH ={
 
 CORS_ORIGIN_ALLOW_ALL = True # added to solve CORS
 
-AUTH_USER_MODEL = 'officer.Officer'
 
 ROOT_URLCONF = 'TracerIND.urls'
 
