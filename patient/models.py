@@ -123,7 +123,7 @@ class Patient (models.Model):
     #     discharged = models.BooleanField()
     # }
 
-    deceased = models.BooleanField(default=False)
+    deceased = models.BooleanField(default=False,null = True)
     # if above is answered yes
 
     DetailsDeath = models.JSONField(null=True)
