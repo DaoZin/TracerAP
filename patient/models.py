@@ -117,8 +117,12 @@ class Patient (models.Model):
     referredto = models.CharField(max_length=50, blank=True)
     ref_status = models.TextField(max_length=300, blank=True)
     treatmentDone = models.TextField(max_length=300, blank=True)
-    discharge = models.CharField(blank=True, max_length=10)
-    dischargeStatus = models.TextField(max_length=500, blank=True)
+    DischargeDetails = models.JSONField(null = True)
+    #FORMAT = 
+    # {
+    #     discharged = models.BooleanField()
+    # }
+
     deceased = models.BooleanField(default=False)
     # if above is answered yes
 

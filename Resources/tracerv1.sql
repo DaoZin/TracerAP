@@ -1,6 +1,16 @@
 
 --
 
+
+
+COPY public.mandal_mandal (mandal_id, name) FROM stdin;
+01	Chintoor
+02	Yetapaka
+03	Kunnavaram
+04	VR Puram
+\.
+
+
 COPY public."PHC_phc" ("PHC_id", name, mandal_id) FROM stdin;
 01	Tulasipaka	01
 02	Edugurallapally	01
@@ -12,30 +22,6 @@ COPY public."PHC_phc" ("PHC_id", name, mandal_id) FROM stdin;
 09	Jeediguppa	04
 \.
 
-
-
-
-COPY public.mandal_mandal (mandal_id, name) FROM stdin;
-01	Chintoor
-02	Yetapaka
-03	Kunnavaram
-04	VR Puram
-\.
-
-
-
---
--- Data for Name: patient_patient; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.patient_patient (pkid, name, surname, relation, gaurdian_name, age, gender, phone, adhaar, maritalstatus, bloodgroup, "PVTG", "pedalEdema", doctorreq, "hospitalAdmit", "dateOfAdmit", refered, referredto, ref_status, "treatmentDone", discharge, "dischargeStatus", deceased, village_id, opd, "BasicSymptoms", "BasicVitals", height, mandal_id, phc_id, report, villagesec_id, weight, "AnemiaProfile", habits, "DetailsDeath", "KidneyProfile", pedal_profile, address, type_data) FROM stdin;
-UR1cmBXWFumKD4NZCcAqaPT0hAzshrsE	Tony	Stark	son	Howard Stark	47	M	9876545678	U2FsdGVkX19dDm0xWFwF/+QVvZX9wW0qhTO5un25J20=	married	ab-	ST		f			f						f	281	f	{"Cold": true, "Aches": "", "Cough": "", "Fever": "", "others": "", "Fatigue": "", "Bleeding": "", "Diarrohea": true, "Infection": ""}	{"BP": "", "HR": "", "Pulse": "", "RespRate": "", "Temperature": ""}	0.00	03	07	{}	32	0.00	{"hb": 0, "mcv": "", "pcv": "", "rbc": "", "rdw": "", "mchc": "", "wbc_count": 0, "plat_count": 0, "dateOfBloodTest": "2020-10-17", "diffrential_count": {"monocytes": null, "eosinophils": null, "lymphocytes": null}}	{"smoking": true, "drinking": true}	{"deathDate": "", "causeOfDeath": "", "placeOfDeath": ""}	{"ailments": "", "dialysis": false, "kidneystatus": ""}	{"bun": 0, "uricAcid": 0, "bloodUrea": 0, "pedaltype": "", "dateoftesting": "2020-10-10", "serumCreatinine": 0, "electrolytes_sodium": 0, "electrolytes_potassium": 0}	Malibu	\N
-ao1eZVWPgpUrdnVEYDx8NWIxAWZXxP4s	Steve	Rogers	son	USA	98	M	1234232333	U2FsdGVkX18tWiGWEqe0oosbw50DdBhgxNBY26RYXf4=	single	b+	PVTG		f			f						f	23	f	{"Cold": "", "Aches": "", "Cough": "", "Fever": "", "others": "", "Fatigue": "", "Bleeding": "", "Diarrohea": "", "Infection": ""}	{"BP": "", "HR": "", "Pulse": "", "RespRate": "", "Temperature": ""}	0.00	01	01	{}	3	0.00	{"hb": 0, "mcv": "", "pcv": "", "rbc": "", "rdw": "", "mchc": "", "wbc_count": 0, "plat_count": 0, "dateOfBloodTest": "", "diffrential_count": {"monocytes": null, "eosinophils": null, "lymphocytes": null}}	{"smoking": true, "drinking": true}	{"deathDate": "", "causeOfDeath": "", "placeOfDeath": ""}	{"ailments": "", "dialysis": false, "kidneystatus": ""}	{"bun": 0, "uricAcid": 0, "bloodUrea": 0, "pedaltype": "", "dateoftesting": "", "serumCreatinine": 0, "electrolytes_sodium": 0, "electrolytes_potassium": 0}	Queens	\N
-aoYoyd07m4p2nrG1qYXkEdRiPadK59mL	Abhishek	Prasad	son	None	22	M	9068522634	U2FsdGVkX1+99yrLO+9Tzn0BY42lIAKLyWY+wMdZP4s=	single	a+	PVTG	Y	t	AH/Chintoor	2020-10-22	t						f	131	t	{"Cold": "", "Aches": "", "Cough": "", "Fever": true, "others": "None", "Fatigue": true, "Bleeding": true, "Diarrohea": "", "Infection": ""}	{"BP": "120/80", "HR": "86", "Pulse": "67", "RespRate": "35", "Temperature": "97.5"}	181.00	01	02	{}	13	73.00	{"hb": "13", "mch": "12", "mcv": "57", "pcv": "28", "rbc": "98", "rdw": "214", "mchc": "94", "wbc_count": "124", "plat_count": "12540", "dateOfBloodTest": "2020-10-16", "diffrential_count": {"monocytes": "12", "eosinophils": "14", "lymphocytes": "13"}}	{"smoking": true, "drinking": true}	{"deathDate": "", "causeOfDeath": "", "placeOfDeath": ""}	{"ailments": "None", "dialysis": false, "kidneystatus": "abnormal"}	{"bun": "34", "uricAcid": "3.5", "bloodUrea": "2.5", "pedaltype": "bilateral", "dateoftesting": "2020-10-22", "serumCreatinine": "1.1", "electrolytes_sodium": "21", "electrolytes_potassium": "25"}	Bengaluru	\N
-DQPO6AVJdLZLHiE7E1QiistcTEzXqzqA	Abhishek	Prasad	son	Xyz	23	M	9068522634	U2FsdGVkX18vvZveOrTWWLeW3RVjwq8wP36tY0D6+qI=	single	a+	PVTG	Y	t	PHC/Laxmipuram	2020-10-23	t						f	35	t	{"Cold": true, "Aches": "", "Cough": true, "Fever": true, "others": "Ond", "Fatigue": "", "Bleeding": "", "Diarrohea": "", "Infection": ""}	{"BP": "130/80", "HR": "89", "Pulse": "67", "RespRate": "35", "Temperature": "97.5"}	182.00	01	01	{}	4	73.00	{"hb": "24", "mch": "2", "mcv": "1", "pcv": "12", "rbc": "68", "rdw": "28", "mchc": "36", "wbc_count": "23", "plat_count": "6977", "dateOfBloodTest": "2020-10-15", "diffrential_count": {"monocytes": "1", "eosinophils": "3", "lymphocytes": "2"}}	{"smoking": true, "drinking": true}	{"deathDate": "", "causeOfDeath": "", "placeOfDeath": ""}	{"ailments": "None", "dialysis": false, "kidneystatus": "abnormal"}	{"bun": "34", "uricAcid": "3.3", "bloodUrea": "2.2", "pedaltype": "bilateral", "dateoftesting": "2020-10-15", "serumCreatinine": "1.1", "electrolytes_sodium": "24", "electrolytes_potassium": "12"}	Address	\N
-TlOhEFSnrqV9GiY6xzev4T2n4qYqO5c3	Shlok	Parida	son	Dipak Parida	22	M	9820244274	U2FsdGVkX19UQqvUaGicASRz9kQ++DBF0v8GGXCEIW8=	single	b+	NST	N	f			f						f	172	f	{"Cold": "", "Aches": "", "Cough": true, "Fever": true, "others": "", "Fatigue": "", "Bleeding": "", "Diarrohea": "", "Infection": true}	{"BP": "112", "HR": "100", "Pulse": "100", "RespRate": "100", "Temperature": "37"}	183.00	02	05	{}	18	85.00	{"hb": "22", "mch": "36", "mcv": "22", "pcv": "18", "rbc": "22", "rdw": "12", "mchc": "24", "wbc_count": "23", "plat_count": "36", "dateOfBloodTest": "2020-10-28", "diffrential_count": {"monocytes": "120", "eosinophils": "32", "lymphocytes": "152"}}	{"smoking": true, "drinking": true}	{"deathDate": "", "causeOfDeath": "", "placeOfDeath": ""}	{"ailments": "", "dialysis": false, "kidneystatus": "good"}	{}	B-601 balaji towers	\N
-QVqTgy0xUAoeLA6fOQdaWT53w7FfYSiK	Test	3	son	Test	22	M		U2FsdGVkX19KmxShuz2CEST0PaCrV39fRvMG2iLfq8I=	married	a+	ST		f			f						f	118	f	{"Cold": "", "Aches": "", "Cough": "", "Fever": "", "others": "", "Fatigue": "", "Bleeding": "", "Diarrohea": "", "Infection": ""}	{"BP": "", "HR": "", "Pulse": "", "RespRate": "", "Temperature": ""}	0.00	01	02	{}	12	0.00	{"hb": 0, "mch": "", "mcv": "", "pcv": "", "rbc": "", "rdw": "", "mchc": "", "wbc_count": 0, "plat_count": 0, "dateOfBloodTest": "", "diffrential_count": {"monocytes": "11", "eosinophils": "33", "lymphocytes": "22"}}	{"smoking": false, "drinking": false}	{"deathDate": "", "causeOfDeath": "", "placeOfDeath": ""}	{"ailments": "", "dialysis": false, "kidneystatus": ""}	{"bun": 0, "uricAcid": 0, "bloodUrea": 0, "pedaltype": "", "dateoftesting": "", "serumCreatinine": 0, "electrolytes_sodium": 0, "electrolytes_potassium": 0}	Address	\N
-\.
 
 
 --
