@@ -134,6 +134,7 @@ class Patient (models.Model):
         # causeOfDeath = models.TextField(max_length=300,blank=True)
     }
     AnemiaProfile = models.JSONField(null=True)
+    PatientHealthStatus = models.JSONField(null = True)
     # What it will look like:
     # {
     #    wbc_count = models.DecimalField(max_digits=5, decimal_places=2,blank = True)
