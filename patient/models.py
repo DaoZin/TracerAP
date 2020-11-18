@@ -24,7 +24,7 @@ class Patient (models.Model):
     gender = models.CharField(default='NaN', max_length=3)
     address = models.CharField(max_length=500)
     weight = models.DecimalField(
-        default=0.0, decimal_places=2, max_digits=4, blank=True)
+        default=0.0, decimal_places=3, max_digits=6, blank=True)
     height = models.DecimalField(
         default=0.0, decimal_places=2, max_digits=5, blank=True)
     bloodgroup = models.CharField(default=None, max_length=4)
