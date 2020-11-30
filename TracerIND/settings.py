@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-from . import development_settings as env
+from . import production_settings as env
 import os
 import datetime
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
