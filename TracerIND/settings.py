@@ -196,4 +196,7 @@ CORS_ORIGIN_WHITELIST = (
        'https://tracerind.covidindiataskforce.org',
 )
 CORS_ALLOW_CREDENTIALS = True
-
+SECURE_HSTS_SECONDS = 60
+SECURE_HSTS_SECONDS = True
+SECURE_HSTS_SECONDS = True
+SECURE_HSTS_SECONDS = True
