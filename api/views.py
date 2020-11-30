@@ -54,9 +54,7 @@ def APIView(request):
     
     return Response(APIUrls)
 
-
 # CRUD FOR PATIENT
-
 
 @api_view(["POST"])
 def AddPatient(request):

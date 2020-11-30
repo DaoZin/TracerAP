@@ -24,7 +24,7 @@ class Patient (models.Model):
     gender = models.CharField(default='NaN', max_length=3)
     address = models.CharField(max_length=500)
     weight = models.DecimalField(
-        default=0.0, decimal_places=2, max_digits=4, blank=True)
+        default=0.0, decimal_places=3, max_digits=6, blank=True)
     height = models.DecimalField(
         default=0.0, decimal_places=2, max_digits=5, blank=True)
     bloodgroup = models.CharField(default=None, max_length=4)
@@ -117,9 +117,13 @@ class Patient (models.Model):
     referredto = models.CharField(max_length=50, blank=True)
     ref_status = models.TextField(max_length=300, blank=True)
     treatmentDone = models.TextField(max_length=300, blank=True)
-    discharge = models.CharField(blank=True, max_length=10)
-    dischargeStatus = models.TextField(max_length=500, blank=True)
-    deceased = models.BooleanField(default=False)
+    DischargeDetails = models.JSONField(null = True)
+    #FORMAT = 
+    # {
+    #     discharged = models.BooleanField()
+    # }
+
+    deceased = models.BooleanField(default=False,null = True)
     # if above is answered yes
 
     DetailsDeath = models.JSONField(null=True)
@@ -130,6 +134,7 @@ class Patient (models.Model):
         # causeOfDeath = models.TextField(max_length=300,blank=True)
     }
     AnemiaProfile = models.JSONField(null=True)
+    PatientHealthStatus = models.JSONField(null = True)
     # What it will look like:
     # {
     #    wbc_count = models.DecimalField(max_digits=5, decimal_places=2,blank = True)
