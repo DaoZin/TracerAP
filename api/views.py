@@ -54,6 +54,18 @@ def APIView(request):
     
     return Response(APIUrls)
 
+@api_view(['GET'])
+def GetAccessLevel(request):
+    access = request.user.officer.access_level
+    print(type(access))
+    if not access:
+        return Response({"AccessLevel":"ADMIN","PHC":"All"},status = 200)
+    else:
+        res = {
+            "AccessLevel":access.name,
+            "PHC":access.PHC_id
+        }
+        return Response(res,status = 200)
 # CRUD FOR PATIENT
 
 @api_view(["POST"])

@@ -8,6 +8,7 @@ from . import views
 
 urlpatterns = [
     path('',views.APIView,name = "APIList"), 
+    path('GetAccessLevel/',views.GetAccessLevel,name = "GetAccessLevel"), 
     path('GetAllVillage/',views.GetAllVillage,name = "GetAllVillage"), 
     path('GetAllVillageSec/',views.GetAllVillageSec,name = "GetAllVillageSec"), 
     path('GetAllPHC/',views.GetAllPHC,name = "GetAllPHC"), 
