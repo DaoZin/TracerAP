@@ -1,6 +1,6 @@
-# TracerIND
+# TracerAP
 
-TracerIND is a Medical History analysis and tracking tool. Based on a Django DRF - ReactJS - Nginx Configuration
+TracerAP is a Medical History analysis and tracking tool. Based on a Django DRF - ReactJS - Nginx Configuration
 
 ## Installation
 
@@ -15,7 +15,7 @@ Now,to clone code, make Virtual env and setup the database and Django Framework:
 
 ```bash
 $ sudo apt-get install virtualenv
-$ mkdir ~/TracerIND && cd TracerIND
+$ mkdir ~/TracerAP && cd TracerAP
 $ virtualenv venv
 # now activate virtual env
 $ source venv/bin/activate
@@ -24,16 +24,16 @@ $ pip3 install django djangorestframework djangorestframework-jwt django-cors-he
 # download database backup from link : https://drive.google.com/drive/folders/1AbTPsgRXrRmd87vDNapyHwv-QM8QYr2I?usp=sharing
 # to restore backup and set database
 $ sudo -u postgres psql
-$ CREATE DATABASE tracerind;
+$ CREATE DATABASE tracerAP;
 $ \password
 $ admin1234
 $ \q
 
 # now restore
-$ sudo -u postgres psql tracerind < /Resources/tracerdatabak.sql
-$ cd <path to TracerIND>
+$ sudo -u postgres psql tracerAP < /Resources/tracerdatabak.sql
+$ cd <path to TracerAP>
 # start virtual env
-$ cd TracerIND
+$ cd TracerAP
 $ python3 manage.py makemigrations
 $ python3 manage.py migrate
 $ python3 manage.py runserver
