@@ -79,6 +79,7 @@ REST_FRAMEWORK = {
     ),
 }
 
+#JWT Settings
 JWT_AUTH ={
     'JWT_ENCODE_HANDLER':
     'rest_framework_jwt.utils.jwt_encode_handler',
@@ -143,7 +144,7 @@ WSGI_APPLICATION = 'TracerIND.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tracerind',
+        'NAME': 'tracerap',
         'USER': env.username,
         'PASSWORD': env.password,
         'HOST': '127.0.0.1',
@@ -191,9 +192,6 @@ STATICFILES_DIRS = [
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'static')
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = (
-       'http://localhost:3000',
-       'https://tracerind.covidindiataskforce.org',
-)
+CORS_ORIGIN_WHITELIST = () # Enter URLS here
 CORS_ALLOW_CREDENTIALS = True
 
